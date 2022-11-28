@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% load static %} {% block title %} 
+
+{{folder_name}}
+{% endblock title %} {%block body %}
+<div class="flex justify-between items-center gap-8 mb-4 sm:my-8 sm:mx-4">
+  <div class="flex items-center gap-12">
+    <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold">{{folder_name}}</h2>
+  </div>
+</div>
+<div class="max-w-[85rem] mx-auto mt-12 container flex items-center">
+    <!-- File model -->
+ <button class="block mx-4 text-white bg-gray-900 hover:bg-gray-800 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" data-modal-toggle="ModalFile">
+   Upload File
+ </button>
+ 
+ <!-- Main modal -->
+ <div id="ModalFile" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full md:inset-0 h-modal md:h-full">
+     <div class="relative w-full max-w-2xl h-full md:h-auto">
+         <!-- Modal content -->
+         <div class="relative bg-white rounded-lg shadow">
+             <!-- Modal header -->
+             <div class="flex justify-between items-start p-4 rounded-t border-b ">
+                 <h3 class="text-xl font-semibold text-gray-900">
+                     Upload File
+                 </h3>
+                 
+             </div>
+             <!-- Modal body -->
+             <div class="p-6 space-y-6">
+               <form method="POST" action="{% url 'file_upload' id %}" enctype="multipart/form-data">
+                 {% csrf_token %}
+               <label for="file-input" class="">Upload file</label>
+<input type="file" required name="file-input" id="file-input" class="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-gray-500 focus:ring-gray-500
+file:bg-transparent file:border-0
+file:bg-gray-100 file:mr-4
+file:py-3 file:px-4">
+<div class="flex items-center space-x-2 rounded-b my-4">
+ <button type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Upload</button>
+ <button data-modal-toggle="ModalFile" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Cancel</button>
+</div>
+               </form>
+             </div>
+             <!-- Modal footer -->
+             
+         </div>
+     </div>
+ </div>
+
+<!-- File model end-->
+<!-- Folder model -->
+<button class="block mx-4 text-white bg-gray-900 hover:bg-gray-800 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button" data-modal-toggle="ModalFolder">
+ Create Folder
+</button>
+
+<!-- Main modal -->
+<div id="ModalFolder" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full md:inset-0 h-modal md:h-full">
+   <div class="relative w-full max-w-2xl h-full md:h-auto">
+       <!-- Modal content -->
+       <div class="relative bg-white rounded-lg shadow">
+           <!-- Modal header -->
+           <div class="flex justify-between items-start p-4 rounded-t border-b ">
+               <h3 class="text-xl font-semibold text-gray-900">
+                   Create Folder
+               </h3>
+               
+           </div>
+           <!-- Modal body -->
+           <div class="p-6 space-y-6">
+             <form method="POST" action="{% url 'create_folder' id %}">
+               {% csrf_token %}
+             <label for="file-input" class="">Enter Name</label>
+             <input type="text" name="folder_name" class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500">
+<div class="flex items-center space-x-2 rounded-b my-4">
+<button type="submit" class="text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create</button>
+<button data-modal-toggle="ModalFolder" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10">Cancel</button>
+</div>
+             </form>
+           </div>
+           <!-- Modal footer -->
+           
+       </div>
+   </div>
+</div>
+
+<!-- Main modal -->
+
+</div>
+<!-- Folder model end-->
+<div class="bg-white py-6 sm:py-8 lg:py-12">
+    
+    {% if folders %}
+    <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
+      <div class="flex flex-col lg:flex-row lg:justify-between items-center mb-4 md:mb-8">
+        <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-2 lg:mb-0">Folders</h2>
+      </div>
+  
+      <div class="grid grid-cols-2 md:grid-cols-5 rounded-lg gap-4 lg:gap-6">
+        {% for folder in folders%}
+        <!-- folder - start -->
+        <a href="{% url 'folder' folder.uuid %}">
+          <div class="h-20 flex w-auto justify-start items-center bg-gray-100 text-gray-400 rounded-lg p-4">
+              <svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-full" enable-background="new 0 0 48 48">
+                  <path fill="#FFA000" d="M40,12H22l-4-4H8c-2.2,0-4,1.8-4,4v8h40v-4C44,13.8,42.2,12,40,12z"/>
+                  <path fill="#FFCA28" d="M40,12H8c-2.2,0-4,1.8-4,4v20c0,2.2,1.8,4,4,4h32c2.2,0,4-1.8,4-4V16C44,13.8,42.2,12,40,12z"/>
+              </svg>
+              <h1 class="text-base ml-4 text-gray-900 font-medium">{{folder.name}}</h1>
+          </div></a>
+        {% endfor %}
+        <!-- folder - end -->
+      </div>
+    </div>
+    {% endif %}
+    {% if files %}
+    <div class="max-w-screen-2xl px-4 md:px-8 mx-auto mt-7">
+      <div class="flex flex-col lg:flex-row lg:justify-between items-center mb-4 md:mb-8">
+        <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-2 lg:mb-0">Files</h2>
+      </div>
+  
+      <div class="grid grid-cols-2 md:grid-cols-5 rounded-lg gap-4 lg:gap-6">
+        <!-- file - start -->
+        {% for file in files %}
+        <div>
+          <a href="http://localhost:8000/media/{{file.file}}" class="h-20 flex items-center justify-start bg-gray-100 rounded-lg overflow-hidden p-4">
+            <svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-full min-h-full" enable-background="new 0 0 48 48">
+              <polygon fill="#90CAF9" points="40,45 8,45 8,3 30,3 40,13"/>
+              <polygon fill="#E1F5FE" points="38.5,14 29,14 29,4.5"/>
+          </svg>
+            <div class="w-full ml-1 rounded-lg">
+              <span class="text-gray-900 text-sm font-medium">{% if file.name|length|get_digit:"-1" > 10 %}{{file.name|slice:"0:13"}}...{{file.name|slice:"-5:"}}{%else%}{{file.name}}{%endif%}</span>
+            </div>
+          </a>
+        </div>
+        {%endfor%}
+        <!-- file - end -->
+      </div>
+    </div>
+  </div>
+  {%endif%}
+
+{%endblock body%}
