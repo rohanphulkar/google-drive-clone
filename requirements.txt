@@ -1,5 +1,5 @@
-asgiref==3.5.2
-backports.zoneinfo==0.2.1
+asgiref
+backports.zoneinfo
 Django
 mysqlclient
 python-decouple
