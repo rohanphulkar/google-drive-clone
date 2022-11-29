@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-2ut*d4_o+fvex4ozzb)=cs_f81tfhx*6h$-iq-0t@axj$nth80
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['google-drive-clone.onrender.com']
 
 
 # Application definition
